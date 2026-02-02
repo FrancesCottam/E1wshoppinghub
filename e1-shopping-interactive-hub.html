@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E1 Shopping Writing Practice</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #7C3AED;
+            --secondary: #F59E0B;
+            --accent: #A78BFA;
+            --bg: #FFFBF5;
+            --text: #1A1A1A;
+            --card-bg: #FFFFFF;
+            --shadow: rgba(124, 58, 237, 0.1);
+            --border: #E0DED8;
+            --correct: #10B981;
+            --incorrect: #EF4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lexend', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            padding-bottom: 2rem;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, #6D28D9 100%);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+
+        .header h1 {
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+        }
+
+        .level-badge {
+            background: var(--secondary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .nav-pills {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding: 1rem 0;
+            margin-bottom: 1.5rem;
+        }
+
+        .nav-pill {
+            padding: 0.75rem 1.5rem;
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 25px;
+            cursor: pointer;
+            white-space: nowrap;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .nav-pill:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .nav-pill.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .genre-section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .genre-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 12px var(--shadow);
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .instructions {
+            background: #FEF3C7;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--secondary);
+            font-size: 1.05rem;
+        }
+
+        .cloze-text {
+            background: #F5F3FF;
+            padding: 1.5rem;
+            border-left: 4px solid var(--accent);
+            border-radius: 8px;
+            line-height: 2.5;
+            font-size: 1.1rem;
+        }
+
+        .gap {
+            display: inline-block;
+            margin: 0 0.25rem;
+        }
+
+        select.dropdown {
+            padding: 0.5rem 0.75rem;
+            border: 3px solid var(--primary);
+            border-radius: 8px;
+            font-family: 'Lexend', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            background: white;
+            cursor: pointer;
+            min-width: 100px;
+            transition: all 0.3s ease;
+        }
+
+        select.dropdown:hover {
+            background: #F5F3FF;
+        }
+
+        select.dropdown.correct {
+            border-color: var(--correct);
+            background: #ECFDF5;
+        }
+
+        select.dropdown.incorrect {
+            border-color: var(--incorrect);
+            background: #FEE2E2;
+        }
+
+        .listen-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-family: 'Lexend', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .listen-btn:hover {
+            background: #6D28D9;
+            transform: translateY(-1px);
+        }
+
+        .listen-btn.playing {
+            background: var(--incorrect);
+        }
+
+        .check-btn {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 1.25rem 2rem;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin: 1.5rem 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            display: block;
+            width: 100%;
+        }
+
+        .check-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+        }
+
+        .feedback {
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            display: none;
+            font-size: 1.1rem;
+        }
+
+        .feedback.show {
+            display: block;
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .feedback.success {
+            background: #ECFDF5;
+            border: 3px solid var(--correct);
+            color: #065F46;
+        }
+
+        .feedback.partial {
+            background: #FEF3C7;
+            border: 3px solid var(--secondary);
+            color: #92400E;
+        }
+
+        .score {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .tip-box {
+            background: #E0F2FE;
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 3px solid #0EA5E9;
+            font-size: 1.05rem;
+        }
+
+        .tip-box strong {
+            color: #0369A1;
+        }
+
+        @media (max-width: 640px) {
+            .cloze-text {
+                font-size: 1rem;
+                padding: 1rem;
+                line-height: 2.2;
+            }
+            
+            select.dropdown {
+                font-size: 0.95rem;
+                min-width: 90px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🛍️ E1 Shopping Writing Practice</h1>
+        <p>Simple Gap-Fill Activities</p>
+        <div class="level-badge">Entry 1 Level</div>
+    </div>
+
+    <div class="container">
+        <div class="nav-pills">
+            <button class="nav-pill active" onclick="showGenre('email', this)">✉️ Email</button>
+            <button class="nav-pill" onclick="showGenre('note', this)">📝 Note</button>
+            <button class="nav-pill" onclick="showGenre('paragraph', this)">📄 My Shop</button>
+            <button class="nav-pill" onclick="showGenre('shibuya', this)">🇯🇵 Shibuya</button>
+            <button class="nav-pill" onclick="showGenre('aboutme', this)">⭐ About Me</button>
+        </div>
+
+        <!-- EMAIL SECTION -->
+        <div id="email" class="genre-section active">
+            <div class="card">
+                <h2 class="card-title">✉️ Simple Email About Shopping</h2>
+                
+                <div class="instructions">
+                    <strong>📝 Choose the correct word for each gap.</strong> Remember to use capital letters!
+                </div>
+
+                <button class="listen-btn" onclick="speakText('email-listen')">🔊 Listen</button>
+                <div id="email-listen" style="display:none;">I am going to the shops today. Do you want to come with me? There is a new shop in the town centre and I want to see it. I have got some money so I can buy a new coat. The shop is next to the library. Call me today!</div>
+
+                <div class="cloze-text" id="email-text">
+                    <strong>To:</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2457455645644149454d480a474b49">[email&#160;protected]</a><br>
+                    <strong>Subject:</strong> Shopping today<br><br>
+
+                    Hi Sara<br><br>
+
+                    <span class="gap">
+                        <select class="dropdown" data-answer="I" data-gap="1">
+                            <option value="">Choose...</option>
+                            <option value="i">i</option>
+                            <option value="I">I</option>
+                        </select>
+                    </span>
+                    am going to the shops today. 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="Do" data-gap="2">
+                            <option value="">Choose...</option>
+                            <option value="Do">Do</option>
+                            <option value="Does">Does</option>
+                            <option value="Is">Is</option>
+                        </select>
+                    </span>
+                    you want to come with me? 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="There is" data-gap="3">
+                            <option value="">Choose...</option>
+                            <option value="There is">There is</option>
+                            <option value="There are">There are</option>
+                            <option value="It is">It is</option>
+                        </select>
+                    </span>
+                    a new shop in the town centre 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="and" data-gap="4">
+                            <option value="">Choose...</option>
+                            <option value="and">and</option>
+                            <option value="but">but</option>
+                            <option value="so">so</option>
+                        </select>
+                    </span>
+                    I want to see it.<br><br>
+
+                    I 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="have got" data-gap="5">
+                            <option value="">Choose...</option>
+                            <option value="have">have</option>
+                            <option value="have got">have got</option>
+                            <option value="has got">has got</option>
+                        </select>
+                    </span>
+                    some money 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="so" data-gap="6">
+                            <option value="">Choose...</option>
+                            <option value="and">and</option>
+                            <option value="but">but</option>
+                            <option value="so">so</option>
+                        </select>
+                    </span>
+                    I can buy a new coat. The shop is 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="next to" data-gap="7">
+                            <option value="">Choose...</option>
+                            <option value="next to">next to</option>
+                            <option value="in">in</option>
+                            <option value="at">at</option>
+                        </select>
+                    </span>
+                    the library. 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="Call" data-gap="8">
+                            <option value="">Choose...</option>
+                            <option value="Call">Call</option>
+                            <option value="Calling">Calling</option>
+                            <option value="Calls">Calls</option>
+                        </select>
+                    </span>
+                    me today!<br><br>
+
+                    Thanks<br>
+                    Maria
+                </div>
+
+                <button class="check-btn" onclick="checkAnswers('email')">✓ Check My Answers</button>
+
+                <div class="feedback" id="email-feedback"></div>
+
+                <div class="tip-box">
+                    <strong>💡 Remember:</strong><br>
+                    • "I" always has a capital letter<br>
+                    • Use "There is" for one thing, "There are" for many things<br>
+                    • "and" = add something, "so" = because of this, "but" = different<br>
+                    • "Do you...?" = question, "Call me" = instruction
+                </div>
+            </div>
+        </div>
+
+        <!-- NOTE SECTION -->
+        <div id="note" class="genre-section">
+            <div class="card">
+                <h2 class="card-title">📝 Simple Note About a Shopping List</h2>
+                
+                <div class="instructions">
+                    <strong>📝 Choose the correct word for each gap.</strong> Check capital letters!
+                </div>
+
+                <button class="listen-btn" onclick="speakText('note-listen')">🔊 Listen</button>
+                <div id="note-listen" style="display:none;">I need to buy some food. There are many things on my list. I need bread and milk. I also want some fruit. The shop is in the High Street. Do not forget to bring the shopping bag! Meet me there at three o clock.</div>
+
+                <div class="cloze-text" id="note-text">
+                    Hi Tom<br><br>
+
+                    <span class="gap">
+                        <select class="dropdown" data-answer="I" data-gap="9">
+                            <option value="">Choose...</option>
+                            <option value="i">i</option>
+                            <option value="I">I</option>
+                        </select>
+                    </span>
+                    need to buy some food. 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="There are" data-gap="10">
+                            <option value="">Choose...</option>
+                            <option value="There is">There is</option>
+                            <option value="There are">There are</option>
+                            <option value="It is">It is</option>
+                        </select>
+                    </span>
+                    many things on my list. I need bread 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="and" data-gap="11">
+                            <option value="">Choose...</option>
+                            <option value="and">and</option>
+                            <option value="but">but</option>
+                            <option value="so">so</option>
+                        </select>
+                    </span>
+                    milk. 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="I" data-gap="12">
+                            <option value="">Choose...</option>
+                            <option value="i">i</option>
+                            <option value="I">I</option>
+                        </select>
+                    </span>
+                    also want some fruit.<br><br>
+
+                    The shop is 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="in" data-gap="13">
+                            <option value="">Choose...</option>
+                            <option value="in">in</option>
+                            <option value="at">at</option>
+                            <option value="on">on</option>
+                        </select>
+                    </span>
+                    the High Street. 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="Do not" data-gap="14">
+                            <option value="">Choose...</option>
+                            <option value="Do not">Do not</option>
+                            <option value="Does not">Does not</option>
+                            <option value="Not">Not</option>
+                        </select>
+                    </span>
+                    forget to bring the shopping bag! 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="Meet" data-gap="15">
+                            <option value="">Choose...</option>
+                            <option value="Meet">Meet</option>
+                            <option value="Meets">Meets</option>
+                            <option value="Meeting">Meeting</option>
+                        </select>
+                    </span>
+                    me 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="there" data-gap="16">
+                            <option value="">Choose...</option>
+                            <option value="there">there</option>
+                            <option value="here">here</option>
+                            <option value="where">where</option>
+                        </select>
+                    </span>
+                    at 3 o'clock.<br><br>
+
+                    See you<br>
+                    Sam
+                </div>
+
+                <button class="check-btn" onclick="checkAnswers('note')">✓ Check My Answers</button>
+
+                <div class="feedback" id="note-feedback"></div>
+
+                <div class="tip-box">
+                    <strong>💡 Remember:</strong><br>
+                    • "I" always needs a capital letter<br>
+                    • "There are" for many things (many things on my list)<br>
+                    • "in" the High Street (we say "in" for streets)<br>
+                    • "Do not forget" = negative instruction<br>
+                    • "Meet me there" = instruction to someone else
+                </div>
+            </div>
+        </div>
+
+        <!-- PARAGRAPH SECTION -->
+        <div id="paragraph" class="genre-section">
+            <div class="card">
+                <h2 class="card-title">📄 My Favourite Shop</h2>
+                
+                <div class="instructions">
+                    <strong>📝 Choose the correct word for each gap.</strong> Remember capital letters for places!
+                </div>
+
+                <button class="listen-btn" onclick="speakText('paragraph-listen')">🔊 Listen</button>
+                <div id="paragraph-listen" style="display:none;">I like shopping in my town. There is a good shop next to the park. The shop sells clothes and shoes. I buy things there every week. The shop is very good and the people are friendly.</div>
+
+                <div class="cloze-text" id="paragraph-text">
+                    <strong>My Favourite Shop</strong><br><br>
+
+                    <span class="gap">
+                        <select class="dropdown" data-answer="I" data-gap="17">
+                            <option value="">Choose...</option>
+                            <option value="i">i</option>
+                            <option value="I">I</option>
+                        </select>
+                    </span>
+                    like shopping in my town. 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="There is" data-gap="18">
+                            <option value="">Choose...</option>
+                            <option value="There is">There is</option>
+                            <option value="There are">There are</option>
+                            <option value="It is">It is</option>
+                        </select>
+                    </span>
+                    a good shop 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="next to" data-gap="19">
+                            <option value="">Choose...</option>
+                            <option value="next to">next to</option>
+                            <option value="in">in</option>
+                            <option value="at">at</option>
+                        </select>
+                    </span>
+                    the park. The shop sells clothes 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="and" data-gap="20">
+                            <option value="">Choose...</option>
+                            <option value="and">and</option>
+                            <option value="but">but</option>
+                            <option value="so">so</option>
+                        </select>
+                    </span>
+                    shoes. 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="I" data-gap="21">
+                            <option value="">Choose...</option>
+                            <option value="i">i</option>
+                            <option value="I">I</option>
+                        </select>
+                    </span>
+                    buy things 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="there" data-gap="22">
+                            <option value="">Choose...</option>
+                            <option value="there">there</option>
+                            <option value="here">here</option>
+                            <option value="where">where</option>
+                        </select>
+                    </span>
+                    every week. The shop is 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="very" data-gap="23">
+                            <option value="">Choose...</option>
+                            <option value="very">very</option>
+                            <option value="many">many</option>
+                            <option value="much">much</option>
+                        </select>
+                    </span>
+                    good 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="and" data-gap="24">
+                            <option value="">Choose...</option>
+                            <option value="and">and</option>
+                            <option value="but">but</option>
+                            <option value="so">so</option>
+                        </select>
+                    </span>
+                    the people are friendly.
+                </div>
+
+                <button class="check-btn" onclick="checkAnswers('paragraph')">✓ Check My Answers</button>
+
+                <div class="feedback" id="paragraph-feedback"></div>
+
+                <div class="tip-box">
+                    <strong>💡 Remember:</strong><br>
+                    • "I" always has a capital letter<br>
+                    • "There is" for one thing (a good shop)<br>
+                    • "there" = in that place<br>
+                    • "very" good (not "many" good or "much" good)<br>
+                    • Use "and" to add two things together
+                </div>
+            </div>
+        </div>
+
+        <!-- SHIBUYA SECTION -->
+        <div id="shibuya" class="genre-section">
+            <div class="card">
+                <h2 class="card-title">🇯🇵 Shopping in Shibuya 109, Japan</h2>
+                
+                <div class="instructions">
+                    <strong>📝 Choose the correct word for each gap.</strong> This is about a famous shopping centre in Japan!
+                </div>
+
+                <button class="listen-btn" onclick="speakText('shibuya-listen')">🔊 Listen</button>
+                <div id="shibuya-listen" style="display:none;">Shibuya one zero nine is different to shopping centres in the UK. In the UK, a shopping centre like Meadowhall has many different types of shops. Clothes shops, toy shops, shoe shops and more. Shibuya one zero nine is mostly about fashion. Almost every shop sells clothes, shoes or beauty products for young people. Also, in the UK, shop staff do not usually talk to you when you walk in. But in Japan, the staff say irrashaimase when you enter. This means welcome. They are very happy to help you. Shopping here feels very different! There are also places to eat inside Shibuya one zero nine. You can try Japanese sweets and snacks. Some of the food is very pretty to look at. Many people take photos of their food! Shibuya one zero nine is open every day from ten in the morning to nine at night. It is very close to Shibuya Station. You can get there by train. Come and experience shopping, Japanese style!</div>
+
+                <div class="cloze-text" id="shibuya-text">
+                    <strong>Shopping in Shibuya 109, Japan</strong><br><br>
+
+                    Shibuya 109 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="is" data-gap="25">
+                            <option value="">Choose...</option>
+                            <option value="is">is</option>
+                            <option value="are">are</option>
+                            <option value="am">am</option>
+                        </select>
+                    </span>
+                    different to shopping centres in the UK. 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="In" data-gap="26">
+                            <option value="">Choose...</option>
+                            <option value="In">In</option>
+                            <option value="At">At</option>
+                            <option value="On">On</option>
+                        </select>
+                    </span>
+                    the UK, a shopping centre like Meadowhall 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="has" data-gap="27">
+                            <option value="">Choose...</option>
+                            <option value="has">has</option>
+                            <option value="have">have</option>
+                            <option value="is">is</option>
+                        </select>
+                    </span>
+                    many different types of shops — clothes shops, toy shops, shoe shops and more. Shibuya 109 is mostly 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="about" data-gap="28">
+                            <option value="">Choose...</option>
+                            <option value="about">about</option>
+                            <option value="in">in</option>
+                            <option value="at">at</option>
+                        </select>
+                    </span>
+                    fashion. Almost every shop sells clothes, shoes 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="or,and" data-gap="29">
+                            <option value="">Choose...</option>
+                            <option value="and">and</option>
+                            <option value="or">or</option>
+                            <option value="but">but</option>
+                        </select>
+                    </span>
+                    beauty products for young people.<br><br>
+
+                    <span class="gap">
+                        <select class="dropdown" data-answer="Also,But" data-gap="30">
+                            <option value="">Choose...</option>
+                            <option value="Also">Also</option>
+                            <option value="But">But</option>
+                            <option value="So">So</option>
+                        </select>
+                    </span>
+                    , in the UK, shop staff 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="do not" data-gap="31">
+                            <option value="">Choose...</option>
+                            <option value="do not">do not</option>
+                            <option value="does not">does not</option>
+                            <option value="is not">is not</option>
+                        </select>
+                    </span>
+                    usually talk to you when you walk in. 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="But" data-gap="32">
+                            <option value="">Choose...</option>
+                            <option value="And">And</option>
+                            <option value="So">So</option>
+                            <option value="But">But</option>
+                        </select>
+                    </span>
+                    in Japan, the staff say "irrashaimase" when you enter. This 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="means" data-gap="33">
+                            <option value="">Choose...</option>
+                            <option value="mean">mean</option>
+                            <option value="means">means</option>
+                            <option value="is">is</option>
+                        </select>
+                    </span>
+                    "welcome." 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="They" data-gap="34">
+                            <option value="">Choose...</option>
+                            <option value="He">He</option>
+                            <option value="She">She</option>
+                            <option value="They">They</option>
+                        </select>
+                    </span>
+                    are very happy to help you. Shopping here feels very different!<br><br>
+
+                    <span class="gap">
+                        <select class="dropdown" data-answer="There are" data-gap="35">
+                            <option value="">Choose...</option>
+                            <option value="There is">There is</option>
+                            <option value="There are">There are</option>
+                            <option value="It is">It is</option>
+                        </select>
+                    </span>
+                    also places to eat inside Shibuya 109. You 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="can" data-gap="36">
+                            <option value="">Choose...</option>
+                            <option value="can">can</option>
+                            <option value="cannot">cannot</option>
+                            <option value="must">must</option>
+                        </select>
+                    </span>
+                    try Japanese sweets 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="and" data-gap="37">
+                            <option value="">Choose...</option>
+                            <option value="and">and</option>
+                            <option value="or">or</option>
+                            <option value="but">but</option>
+                        </select>
+                    </span>
+                    snacks. Some of the food is very pretty to look at. Many people 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="take" data-gap="38">
+                            <option value="">Choose...</option>
+                            <option value="take">take</option>
+                            <option value="takes">takes</option>
+                            <option value="took">took</option>
+                        </select>
+                    </span>
+                    photos of their food!<br><br>
+
+                    Shibuya 109 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="is" data-gap="39">
+                            <option value="">Choose...</option>
+                            <option value="is">is</option>
+                            <option value="are">are</option>
+                            <option value="was">was</option>
+                        </select>
+                    </span>
+                    open every day from 10 am to 9 pm. It is very close 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="to" data-gap="40">
+                            <option value="">Choose...</option>
+                            <option value="to">to</option>
+                            <option value="in">in</option>
+                            <option value="at">at</option>
+                        </select>
+                    </span>
+                    Shibuya Station. You 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="can" data-gap="41">
+                            <option value="">Choose...</option>
+                            <option value="can">can</option>
+                            <option value="must">must</option>
+                            <option value="need">need</option>
+                        </select>
+                    </span>
+                    get there 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="by" data-gap="42">
+                            <option value="">Choose...</option>
+                            <option value="by">by</option>
+                            <option value="in">in</option>
+                            <option value="on">on</option>
+                        </select>
+                    </span>
+                    train.<br><br>
+
+                    Come and experience shopping, Japanese style!
+                </div>
+
+                <button class="check-btn" onclick="checkAnswers('shibuya')">✓ Check My Answers</button>
+
+                <div class="feedback" id="shibuya-feedback"></div>
+
+                <div class="tip-box">
+                    <strong>💡 Remember:</strong><br>
+                    • "Shibuya 109 is..." (one place = is)<br>
+                    • "In the UK" (we say "in" for countries)<br>
+                    • "or" = one or the other, "and" = both together<br>
+                    • "They" = the staff (more than one person)<br>
+                    • "There are" for many things (places to eat)<br>
+                    • "by train" (we say "by" for transport)
+                </div>
+            </div>
+        </div>
+
+        <!-- ABOUT ME SECTION -->
+        <div id="aboutme" class="genre-section">
+            <div class="card">
+                <h2 class="card-title">⭐ About Me: Shopping in Sheffield</h2>
+                
+                <div class="instructions">
+                    <strong>📝 Choose the correct word for each gap.</strong> This is a young person talking about shopping!
+                </div>
+
+                <button class="listen-btn" onclick="speakText('aboutme-listen')">🔊 Listen</button>
+                <div id="aboutme-listen" style="display:none;">My name is Aisha and I am sixteen years old. I live in Sheffield. Sheffield is a big city in the north of England. I like shopping at Meadowhall. Meadowhall is a large shopping centre. It is near the river. I go shopping on Saturdays with my friends. We look at clothes shops and shoe shops. Sometimes we buy things but sometimes we just look. My favourite shop is on the second floor. It sells clothes for young people. The clothes are not too expensive so I can buy something every week. Shopping with my friends is fun!</div>
+
+                <div class="cloze-text" id="aboutme-text">
+                    <strong>About Me</strong><br><br>
+
+                    My name 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="is" data-gap="43">
+                            <option value="">Choose...</option>
+                            <option value="is">is</option>
+                            <option value="are">are</option>
+                            <option value="am">am</option>
+                        </select>
+                    </span>
+                    Aisha 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="and" data-gap="44">
+                            <option value="">Choose...</option>
+                            <option value="and">and</option>
+                            <option value="but">but</option>
+                            <option value="so">so</option>
+                        </select>
+                    </span>
+                    I 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="am" data-gap="45">
+                            <option value="">Choose...</option>
+                            <option value="is">is</option>
+                            <option value="are">are</option>
+                            <option value="am">am</option>
+                        </select>
+                    </span>
+                    sixteen years old. I 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="live" data-gap="46">
+                            <option value="">Choose...</option>
+                            <option value="live">live</option>
+                            <option value="lives">lives</option>
+                            <option value="living">living</option>
+                        </select>
+                    </span>
+                    <span class="gap">
+                        <select class="dropdown" data-answer="in" data-gap="47">
+                            <option value="">Choose...</option>
+                            <option value="in">in</option>
+                            <option value="at">at</option>
+                            <option value="on">on</option>
+                        </select>
+                    </span>
+                    Sheffield. Sheffield 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="is" data-gap="48">
+                            <option value="">Choose...</option>
+                            <option value="is">is</option>
+                            <option value="are">are</option>
+                            <option value="am">am</option>
+                        </select>
+                    </span>
+                    a big city in the north of England.<br><br>
+
+                    I like shopping 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="at" data-gap="49">
+                            <option value="">Choose...</option>
+                            <option value="in">in</option>
+                            <option value="at">at</option>
+                            <option value="on">on</option>
+                        </select>
+                    </span>
+                    Meadowhall. Meadowhall 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="is" data-gap="50">
+                            <option value="">Choose...</option>
+                            <option value="is">is</option>
+                            <option value="are">are</option>
+                            <option value="am">am</option>
+                        </select>
+                    </span>
+                    a large shopping centre. It is near the river. I 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="go" data-gap="51">
+                            <option value="">Choose...</option>
+                            <option value="go">go</option>
+                            <option value="goes">goes</option>
+                            <option value="going">going</option>
+                        </select>
+                    </span>
+                    shopping 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="on" data-gap="52">
+                            <option value="">Choose...</option>
+                            <option value="in">in</option>
+                            <option value="at">at</option>
+                            <option value="on">on</option>
+                        </select>
+                    </span>
+                    Saturdays 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="with" data-gap="53">
+                            <option value="">Choose...</option>
+                            <option value="to">to</option>
+                            <option value="with">with</option>
+                            <option value="for">for</option>
+                        </select>
+                    </span>
+                    my friends. We look at clothes shops 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="and" data-gap="54">
+                            <option value="">Choose...</option>
+                            <option value="and">and</option>
+                            <option value="but">but</option>
+                            <option value="or">or</option>
+                        </select>
+                    </span>
+                    shoe shops. Sometimes we buy things 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="but" data-gap="55">
+                            <option value="">Choose...</option>
+                            <option value="and">and</option>
+                            <option value="but">but</option>
+                            <option value="so">so</option>
+                        </select>
+                    </span>
+                    sometimes we just look.<br><br>
+
+                    My favourite shop is 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="on" data-gap="56">
+                            <option value="">Choose...</option>
+                            <option value="in">in</option>
+                            <option value="at">at</option>
+                            <option value="on">on</option>
+                        </select>
+                    </span>
+                    the second floor. It sells clothes for young people. The clothes 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="are" data-gap="57">
+                            <option value="">Choose...</option>
+                            <option value="is">is</option>
+                            <option value="are">are</option>
+                            <option value="am">am</option>
+                        </select>
+                    </span>
+                    not too expensive 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="so" data-gap="58">
+                            <option value="">Choose...</option>
+                            <option value="and">and</option>
+                            <option value="but">but</option>
+                            <option value="so">so</option>
+                        </select>
+                    </span>
+                    I can buy something every week. Shopping 
+                    <span class="gap">
+                        <select class="dropdown" data-answer="with" data-gap="59">
+                            <option value="">Choose...</option>
+                            <option value="to">to</option>
+                            <option value="with">with</option>
+                            <option value="for">for</option>
+                        </select>
+                    </span>
+                    my friends is fun!
+                </div>
+
+                <button class="check-btn" onclick="checkAnswers('aboutme')">✓ Check My Answers</button>
+
+                <div class="feedback" id="aboutme-feedback"></div>
+
+                <div class="tip-box">
+                    <strong>💡 Remember:</strong><br>
+                    • "My name is..." (not "My name am")<br>
+                    • "I am" / "It is" / "They are" (different forms of "be")<br>
+                    • "I live" (not "I lives" - only he/she/it gets an "s")<br>
+                    • "on Saturdays" / "on the second floor" (days and floors use "on")<br>
+                    • "with my friends" (with = together)<br>
+                    • "so" = because of this, I can buy...
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function showGenre(genre, btn) {
+            const sections = document.querySelectorAll('.genre-section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            const pills = document.querySelectorAll('.nav-pill');
+            pills.forEach(pill => pill.classList.remove('active'));
+            
+            document.getElementById(genre).classList.add('active');
+            btn.classList.add('active');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function checkAnswers(genre) {
+            const dropdowns = document.querySelectorAll(`#${genre}-text .dropdown`);
+            let correct = 0;
+            let total = dropdowns.length;
+
+            dropdowns.forEach(dropdown => {
+                const selected = dropdown.value;
+                const answers = dropdown.getAttribute('data-answer').split(',');
+                
+                if (answers.includes(selected)) {
+                    dropdown.classList.add('correct');
+                    dropdown.classList.remove('incorrect');
+                    correct++;
+                } else if (selected !== "") {
+                    dropdown.classList.add('incorrect');
+                    dropdown.classList.remove('correct');
+                }
+            });
+
+            const percentage = Math.round((correct / total) * 100);
+            const feedback = document.getElementById(`${genre}-feedback`);
+            
+            let message = '';
+            let className = '';
+
+            if (percentage === 100) {
+                className = 'success';
+                message = `<div class="score">🎉 Perfect! ${correct}/${total}</div>Well done! You got everything right! You are doing great! ⭐⭐⭐`;
+            } else if (percentage >= 70) {
+                className = 'partial';
+                message = `<div class="score">👍 Good! ${correct}/${total}</div>Good work! Look at the red boxes and try again. You can do it! ⭐`;
+            } else {
+                className = 'partial';
+                message = `<div class="score">📚 Try Again! ${correct}/${total}</div>Keep trying! Read the tips below. You are learning! 😊`;
+            }
+
+            feedback.className = `feedback ${className} show`;
+            feedback.innerHTML = message;
+            feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function speakText(elementId) {
+            const text = document.getElementById(elementId).textContent;
+            const btn = event.target.closest('.listen-btn');
+
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+
+                if (btn.classList.contains('playing')) {
+                    btn.classList.remove('playing');
+                    btn.innerHTML = '🔊 Listen';
+                    return;
+                }
+
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.85;
+                utterance.pitch = 1;
+                utterance.lang = 'en-GB';
+
+                const voices = window.speechSynthesis.getVoices();
+                const britishVoice = voices.find(v => v.lang === 'en-GB');
+                if (britishVoice) utterance.voice = britishVoice;
+
+                btn.classList.add('playing');
+                btn.innerHTML = '⏹ Stop';
+
+                utterance.onend = function() {
+                    btn.classList.remove('playing');
+                    btn.innerHTML = '🔊 Listen';
+                };
+
+                utterance.onerror = function() {
+                    btn.classList.remove('playing');
+                    btn.innerHTML = '🔊 Listen';
+                      };
+
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert('Sorry, your browser does not support text-to-speech.');
+            }
+        }
+    </script>
+</body>
+</html>
